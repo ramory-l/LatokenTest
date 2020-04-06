@@ -60,10 +60,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.exchangeRateLabel.text = "Exchange rate value: \(String(res.value))"
                 }
             } catch let error {
-//                let alert = UIAlertController(title: "Error", message: "SOME ERROR", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//                self.present(alert, animated: true, completion: nil)
-                print(error)
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
         task.resume()
@@ -75,6 +76,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func setupLayout() {
+        
+        exchangeRateLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        exchangeRateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        exchangeRateLabel.bottomAnchor.constraint(equalTo: currencyTextField.topAnchor).isActive = true
+        
         currencyTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         currencyTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         currencyTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
@@ -83,10 +89,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         checkButton.topAnchor.constraint(equalTo: currencyTextField.bottomAnchor, constant: 10).isActive = true
         checkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         checkButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+
         
-        exchangeRateLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        exchangeRateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        exchangeRateLabel.bottomAnchor.constraint(equalTo: currencyTextField.topAnchor).isActive = true
     }
 }
 
